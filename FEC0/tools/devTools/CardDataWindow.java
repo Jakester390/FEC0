@@ -8,17 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
-import javax.swing.JPanel;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
-import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
+
+import util.stringList;
 
 import java.awt.Font;
+import java.util.Scanner;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
 
 public class CardDataWindow {
+	private static final String INSIGNIA = "INSIGNIA_";
+	private static final String WEAPON = "WEAPON_";
+	private static final String FLAG = "FLAG_";
 
 	private JFrame frame;
 	private JTextField tfID;
@@ -26,6 +29,15 @@ public class CardDataWindow {
 	private JTextField tfFull;
 	private JTextField tfClass;
 	private ButtonGroup gender;
+	private stringList insignias;
+	private stringList weapons;
+	private stringList flags;
+	private JComboBox<String> cbInsignia;
+	private JComboBox<String> cbWeapon;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
 
 	/**
 	 * Launch the application.
@@ -54,6 +66,22 @@ public class CardDataWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		Scanner fileScanner = new Scanner(CardDataWindow.class.getResourceAsStream("Data.txt"));
+		insignias = new stringList();
+		weapons = new stringList();
+		flags = new stringList();
+		String holder = "";
+		while(fileScanner.hasNext()) {
+			holder = fileScanner.nextLine();
+			if(holder.startsWith(INSIGNIA)) {
+				insignias.add(holder.substring(INSIGNIA.length()));
+			} else if (holder.startsWith(WEAPON)) {
+				weapons.add(holder.substring(WEAPON.length()));
+			} else if (holder.startsWith(FLAG)) {
+				flags.add(holder.substring(FLAG.length()));
+			}
+		}
+		fileScanner.close();
 		gender = new ButtonGroup();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 325, 300);
@@ -95,11 +123,8 @@ public class CardDataWindow {
 		btnWrite.setBounds(210, 227, 89, 23);
 		frame.getContentPane().add(btnWrite);
 		
-		JButton btnFlags = new JButton("Flags");
-		btnFlags.setBounds(111, 227, 89, 23);
-		frame.getContentPane().add(btnFlags);
-		
 		JRadioButton rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setSelected(true);
 		rdbtnMale.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		rdbtnMale.setBounds(6, 61, 50, 23);
 		frame.getContentPane().add(rdbtnMale);
@@ -108,24 +133,6 @@ public class CardDataWindow {
 		rdbtnFemale.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		rdbtnFemale.setBounds(58, 61, 59, 23);
 		frame.getContentPane().add(rdbtnFemale);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(182, 63, 117, 20);
-		frame.getContentPane().add(scrollPane);
-		
-		JList lstWeapon = new JList();
-		lstWeapon.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lstWeapon.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(lstWeapon);
-		lstWeapon.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Sword", "Axe", "Lance", "Bow", "Tome", "Stone"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
 		
 		JLabel lblWeapon = new JLabel("Weapon:");
 		lblWeapon.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -146,26 +153,89 @@ public class CardDataWindow {
 		lblInsignia.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblInsignia.setBounds(147, 87, 45, 14);
 		frame.getContentPane().add(lblInsignia);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(195, 87, 105, 20);
-		frame.getContentPane().add(scrollPane_1);
-		
-		JList lstInsignia = new JList();
-		lstInsignia.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lstInsignia.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Awakening", "Shadow Dragon", "Hoshido", "Nohr"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		scrollPane_1.setViewportView(lstInsignia);
-		lstInsignia.setToolTipText("");
-		lstInsignia.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		gender.add(rdbtnFemale);
 		gender.add(rdbtnMale);
+		
+		
+		JLabel lblFlags = new JLabel("Flags:");
+		lblFlags.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblFlags.setBounds(147, 112, 153, 14);
+		frame.getContentPane().add(lblFlags);
+		
+		cbInsignia = new JComboBox<String>();
+		cbInsignia.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		cbInsignia.setBounds(192, 62, 108, 20);
+		cbInsignia.setModel(insignias);
+		frame.getContentPane().add(cbInsignia);
+		
+		cbWeapon = new JComboBox<String>();
+		cbWeapon.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		cbWeapon.setBounds(192, 84, 107, 20);
+		cbWeapon.setModel(weapons);
+		frame.getContentPane().add(cbWeapon);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(147, 128, 152, 88);
+		frame.getContentPane().add(scrollPane);
+		
+		JList list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		list.setModel(flags);
+		scrollPane.setViewportView(list);
+		
+		JLabel lblCost = new JLabel("Cost:");
+		lblCost.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblCost.setBounds(10, 231, 29, 14);
+		frame.getContentPane().add(lblCost);
+		
+		textField = new JTextField();
+		textField.setBounds(40, 228, 20, 20);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblPromotionCost = new JLabel("Promotion Cost*:");
+		lblPromotionCost.setToolTipText("If the Card is not a promoted card, make this zero");
+		lblPromotionCost.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblPromotionCost.setBounds(10, 112, 83, 14);
+		frame.getContentPane().add(lblPromotionCost);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(105, 228, 20, 20);
+		frame.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblAttack = new JLabel("Attack:");
+		lblAttack.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblAttack.setBounds(65, 231, 40, 14);
+		frame.getContentPane().add(lblAttack);
+		
+		textField_2 = new JTextField();
+		textField_2.setText("0");
+		textField_2.setColumns(10);
+		textField_2.setBounds(97, 109, 40, 20);
+		frame.getContentPane().add(textField_2);
+		
+		JLabel lblSupport = new JLabel("Support:");
+		lblSupport.setBounds(130, 231, 46, 14);
+		frame.getContentPane().add(lblSupport);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		textField_3.setBounds(175, 228, 20, 20);
+		frame.getContentPane().add(textField_3);
+		
+		JButton btnQuote = new JButton("Quote");
+		btnQuote.setBounds(10, 137, 127, 20);
+		frame.getContentPane().add(btnQuote);
+		
+		JButton btnSkillText = new JButton("Skill Text");
+		btnSkillText.setBounds(10, 163, 127, 23);
+		frame.getContentPane().add(btnSkillText);
+		
+		JCheckBox chckbxCanBeUsed = new JCheckBox("Can be used as bond");
+		chckbxCanBeUsed.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		chckbxCanBeUsed.setSelected(true);
+		chckbxCanBeUsed.setBounds(10, 193, 127, 23);
+		frame.getContentPane().add(chckbxCanBeUsed);
 	}
 }

@@ -1,0 +1,14 @@
+INSIGNIA_Awakening
+INSIGNIA_Shadow Dragon
+INSIGNIA_Hoshido
+INSIGNIA_Nohr
+WEAPON_Sword
+WEAPON_Axe
+WEAPON_Lance
+WEAPON_Tome
+WEAPON_Stone
+WEAPON_Bow
+FLAG_Armor
+FLAG_Mount
+FLAG_Flying
+FLAG_Dragon

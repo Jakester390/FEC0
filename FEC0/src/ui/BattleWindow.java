@@ -90,9 +90,9 @@ public class BattleWindow {
 		gamePane.add(lblYourRetreat);
 		
 		JLabel lblOpponentsOrbs = new JLabel("");
+		lblOpponentsOrbs.setIcon(new ImageIcon(BattleWindow.class.getResource("/resources/pics/Sleeves/S01-001(Sleeves).png")));
 		lblOpponentsOrbs.setHorizontalAlignment(SwingConstants.CENTER);
 		lblOpponentsOrbs.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblOpponentsOrbs.setIcon(new ImageIcon(BattleWindow.class.getResource("/ui/Sleeve.jpg")));
 		lblOpponentsOrbs.setForeground(Color.CYAN);
 		lblOpponentsOrbs.setBackground(Color.WHITE);
 		lblOpponentsOrbs.setBounds(10, 257, 90, 120);
@@ -111,5 +111,8 @@ public class BattleWindow {
 		JPanel descPane = new JPanel();
 		splitPane.setLeftComponent(descPane);
 		descPane.setLayout(null);
+		
+		CardButton cb = new CardButton("S01001.png");
+		descPane.add(cb);
 	}
 }
