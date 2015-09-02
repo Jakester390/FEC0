@@ -232,10 +232,10 @@ public class CardDataWindow {
 		btnSkillText.setBounds(10, 163, 127, 23);
 		frame.getContentPane().add(btnSkillText);
 		
-		JCheckBox chckbxCanBeUsed = new JCheckBox("Can be used as bond");
-		chckbxCanBeUsed.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		chckbxCanBeUsed.setSelected(true);
-		chckbxCanBeUsed.setBounds(10, 193, 127, 23);
-		frame.getContentPane().add(chckbxCanBeUsed);
+		JButton btnEffect = new JButton("Effect (Not Implemented)");
+		btnEffect.setEnabled(false);
+		btnEffect.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		btnEffect.setBounds(10, 193, 127, 23);
+		frame.getContentPane().add(btnEffect);
 	}
 }

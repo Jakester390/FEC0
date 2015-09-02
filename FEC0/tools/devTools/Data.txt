@@ -12,3 +12,4 @@ FLAG_Armor
 FLAG_Mount
 FLAG_Flying
 FLAG_Dragon
+FLAG_Jagen

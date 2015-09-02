@@ -73,6 +73,7 @@ public class Statics {
 	public static final int FLAG_MOUNT = 2;
 	public static final int FLAG_FLYING = 4;
 	public static final int FLAG_DRAGON = 8;
+	public static final int FLAG_JAGEN = 16;
 	
 	
 	public static String getSleeve() {
